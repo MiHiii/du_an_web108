@@ -69,11 +69,32 @@ h2 {
 }
 
 .navbar ul form button {
+  background: rgb(238, 174, 202);
+  background: radial-gradient(
+    circle,
+    rgba(238, 174, 202, 1) 0%,
+    rgba(148, 187, 233, 1) 100%
+  );
+  border-radius: 5px;
+  text-transform: uppercase;
+  color: #fff;
+  cursor: pointer;
+  text-decoration: none;
   height: 32px;
-  padding: 0 10px;
+  padding: 0 20px;
   background-color: white;
   border: none;
   margin-right: 50px;
+  transition: 1s ease;
+}
+
+.navbar ul form button:hover {
+  color: black;
+  text-decoration: underline;
+}
+
+.navbar ul form button:hover {
+  opacity: 0.75;
 }
 
 .navbar li a {
@@ -85,8 +106,13 @@ h2 {
 
 .navbar a svg {
   width: 40px;
+  color: white;
+  transition: 0.25s cubic-bezier(0.7, 0.98, 0.86, 0.98);
 }
 
+.navbar a svg:hover {
+  color: rgb(240, 203, 219);
+}
 .navbar li a:hover {
   text-decoration: underline;
 }
@@ -148,8 +174,53 @@ h2 {
 
 /* Sidebar */
 .sidebar {
+  position: relative;
   display: flex;
   width: 20%;
+}
+
+/* Category-right */
+.category-right {
+  position: absolute;
+  right: 0;
+}
+
+/* Brand-list */
+
+.brand-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.brand-list ul {
+  display: flex;
+  flex-direction: column;
+  row-gap: 8px;
+}
+
+.brand-list a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: rgb(231, 116, 166);
+  font-weight: 600;
+  font-size: 20px;
+  letter-spacing: 0.64px;
+  padding: 10px;
+  overflow: hidden;
+  border-radius: 10px;
+  transition: background-color 0.25s cubic-bezier(0.7, 0.98, 0.86, 0.98);
+  box-shadow: 0 5px 7px -1px rgba(51, 51, 51, 0.23);
+  transition: transform 0.25s cubic-bezier(0.7, 0.98, 0.86, 0.98),
+    box-shadow 0.25s cubic-bezier(0.7, 0.98, 0.86, 0.98);
+  background-color: #fff;
+}
+
+.brand-list a:hover {
+  transform: scale(1.2);
+  box-shadow: 0 9px 47px 11px rgba(51, 51, 51, 0.18);
+  opacity: 0.8;
 }
 
 /* Items */

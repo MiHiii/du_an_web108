@@ -1,7 +1,8 @@
 <?php
 require './api/productData.php';
 //Hàm phân trang
-function paginateArray($dataArray, $itemsPerPage, $currentPage) {
+function paginateArray($dataArray, $itemsPerPage, $currentPage)
+{
   $offset = ($currentPage - 1) * $itemsPerPage;
   return array_slice($dataArray, $offset, $itemsPerPage);
 }
@@ -16,7 +17,7 @@ $totalPages = ceil($totalItems / $itemsPerPage);
 
 
 //Sản phẩm hot
-usort($products, function($a, $b) {
+usort($products, function ($a, $b) {
   return $a['giamGia'] < $b['giamGia'];
 });
 $hotProducts = array_slice($products, 0, 4);
@@ -25,75 +26,77 @@ $hotProducts = array_slice($products, 0, 4);
 
 ?>
 <main>
-      <div class="container">
-        <div class="banner">
-          <img
-            src="https://cdn.tgdd.vn/Files/2021/08/01/1372170/dong-hanh-mua-dich-tro-gia-het-minh-giam-ngay-5.png"
-            alt=""
-          />
+  <div class="container">
+    <div class="banner">
+      <img src="https://cdn.tgdd.vn/Files/2021/08/01/1372170/dong-hanh-mua-dich-tro-gia-het-minh-giam-ngay-5.png" alt="" />
+    </div>
+    <h1 class="heading">KHUYẾN MÃI HOT NHẤT</h1>
+    <div class="item-hot">
+      <?php foreach ($hotProducts as $product) : ?>
+        <div class="item">
+          <h3 class="item-header">
+            <a href=""><?php echo $product['tenSanPham']; ?></a>
+          </h3>
+          <div class="img-item">
+            <a href=""><img src="<?php echo $product['src']; ?>" alt="" /></a>
+          </div>
+          <p class="item--old__price"><?php echo number_format($product['giaBan'], 0, ',', '.'); ?>đ</p>
+          <div class="item--new__price">
+            <span><?php echo number_format($product['giaBan'] - ($product['giaBan'] * $product['giamGia']), 0, ',', '.'); ?></span><span style="text-decoration: underline">đ</span>
+          </div>
         </div>
-        <h1 class="heading">KHUYẾN MÃI HOT NHẤT</h1>
-        <div class="item-hot">
-            <?php foreach($hotProducts as $product): ?>
-              <div class="item">
-              <h3 class="item-header">
-                <a href=""><?php echo$product['tenSanPham'];?></a>
-              </h3>
-              <div class="img-item">
-                <a href=""
-                  ><img
-                    src="<?php echo $product['src'];?>"
-                    alt=""
-                /></a>
-              </div>
-              <p class="item--old__price"><?php echo number_format($product['giaBan'],0,',', '.'); ?>đ</p>
-              <div class="item--new__price">
-                <span><?php echo number_format($product['giaBan']-($product['giaBan']*$product['giamGia']), 0,',', '.'); ?></span
-                ><span style="text-decoration: underline">đ</span>
-              </div>
-            </div>
-            <?php endforeach; ?>
-        </div>
-        <h1 class="heading">SẢN PHẨM MỚI</h1>
-        <div class="content">
-          <div class="sidebar">
-            <form id="sortForm" action="process.php" method="get">
-              <label for="sort">Sắp xếp theo:</label>
-              <select name="sort" id="sort" onchange="this.form.submit()">
+      <?php endforeach; ?>
+    </div>
+    <h1 class="heading">SẢN PHẨM MỚI</h1>
+    <div class="content">
+      <div class="sidebar">
+        <div class="category">
+          <form id="sortForm" action="process.php" method="get">
+            <label for="sort">Sắp xếp theo:</label>
+            <select name="sort" id="sort" onchange="this.form.submit()">
               <option value="" selected disabled hidden>Giá từ cao đến thấp</option>
-                  <option value="desc">Giá từ cao đến thấp</option>
-                  <option value="asc">Giá từ thấp đến cao</option>
-                  <option value="nameAZ">Sắp xếp từ A đến Z</option>
-                  <option value="nameZA">Sắp xếp từ Z đến A</option>
-              </select>
-            </form>
+              <option value="desc">Giá từ cao đến thấp</option>
+              <option value="asc">Giá từ thấp đến cao</option>
+              <option value="nameAZ">Sắp xếp từ A đến Z</option>
+              <option value="nameZA">Sắp xếp từ Z đến A</option>
+            </select>
+          </form>
+          <div class="brand-list">
+            <h2>Danh mục</h2>
+            <ul>
+              <li><a href="products.php?brand=Apple">Apple</a></li>
+              <li><a href="products.php?brand=Samsung">Samsung</a></li>
+              <li><a href="products.php?brand=Oppo">Oppo</a></li>
+              <li><a href="products.php?brand=Xiaomi">Xiaomi</a></li>
+            </ul>
           </div>
-          <div class="items">
-            <div class="item-rows">
-              <?php foreach ($currentPageData as $product): ?>
-                <div class="item">
-                  <h3 class="item-header">
-                    <a href=""><?php echo $product['tenSanPham']; ?></a>
-                  </h3>
-                  <div class="img-item">
-                    <a href=""><img src="<?php echo $product['src']; ?>" alt="" /></a>
-                  </div>
-                  <p class="item--old__price"><?php echo number_format($product['giaBan'],0,',', '.'); ?>đ</p>
-                  <div class="item--new__price">
-                    <span><?php echo number_format($product['giaBan']-($product['giaBan']*$product['giamGia']), 0,',', '.'); ?></span
-                    ><span style="text-decoration: underline">đ</span>
-                  </div>
-                </div>
-              <?php endforeach; ?>
-            </div>
-          </div>
-        </div>
-        <div class="pagination">
-        <?php 
-        for ($page = 1; $page <= $totalPages; $page++) {
-          echo "<a href='?page=$page'>$page</a> ";
-        }
-        ?>
         </div>
       </div>
-    </main>
+      <div class="items">
+        <div class="item-rows">
+          <?php foreach ($currentPageData as $product) : ?>
+            <div class="item">
+              <h3 class="item-header">
+                <a href=""><?php echo $product['tenSanPham']; ?></a>
+              </h3>
+              <div class="img-item">
+                <a href=""><img src="<?php echo $product['src']; ?>" alt="" /></a>
+              </div>
+              <p class="item--old__price"><?php echo number_format($product['giaBan'], 0, ',', '.'); ?>đ</p>
+              <div class="item--new__price">
+                <span><?php echo number_format($product['giaBan'] - ($product['giaBan'] * $product['giamGia']), 0, ',', '.'); ?></span><span style="text-decoration: underline">đ</span>
+              </div>
+            </div>
+          <?php endforeach; ?>
+        </div>
+      </div>
+    </div>
+    <div class="pagination">
+      <?php
+      for ($page = 1; $page <= $totalPages; $page++) {
+        echo "<a href='?page=$page'>$page</a> ";
+      }
+      ?>
+    </div>
+  </div>
+</main>
